@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head><title>Audit Logger</title></head>
+<body>
+<h1>Log an Action</h1>
+<form id="logForm">
+  Patient ID: <input name="patientId"><br>
+  User ID: <input name="userId"><br>
+  Action: <input name="action"><br>
+  <button type="submit">Submit</button>
+</form>
+<script>
+document.getElementById('logForm').onsubmit = async (e) => {
+  e.preventDefault();
+  const data = {
+    patientId: e.target.patientId.value,
+    userId: e.target.userId.value,
+    action: e.target.action.value
+  };
+  const res = await fetch('/log', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer test-token'
+    },
+    body: JSON.stringify(data)
+  });
+  const result = await res.json();
+  alert(JSON.stringify(result));
+};
+</script>
+</body>
+</html>
